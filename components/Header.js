@@ -9,7 +9,6 @@ const Header = () => {
   return (
     <header
       className="sticky top-0 z-50 grid grid-cols-3
-    
     bg-white shadow-md  p-5 md:px-10"
     >
       <div
@@ -17,7 +16,7 @@ const Header = () => {
       cursor-pointer my-auto "
       >
         <Image
-          src="https://upload.wikimedia.org/wikipedia/commons/6/69/Airbnb_Logo_B%C3%A9lo.svg"
+          src="https://links.papareact.com/qd3"
           layout="fill"
           objectFit="contain"
           objectPosition="left"
