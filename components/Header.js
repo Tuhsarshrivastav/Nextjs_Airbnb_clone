@@ -10,11 +10,13 @@ import { useState } from "react";
 import "react-date-range/dist/styles.css"; // main style file
 import "react-date-range/dist/theme/default.css"; // theme css file
 import { DateRangePicker } from "react-date-range";
-const Header = () => {
+import { useRouter } from "next/dist/client/router";
+const Header = ({ placeholder }) => {
   const [searchInput, setsearchInput] = useState("");
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setendDate] = useState(new Date());
   const [numberofGuests, setnumberofGuests] = useState(1);
+  const router = useRouter();
 
   const handleSelect = (ranges) => {
     setStartDate(ranges.selection.startDate);
@@ -29,12 +31,25 @@ const Header = () => {
   const resatInput = () => {
     setsearchInput("");
   };
+
+  const search = () => {
+    router.push({
+      pathname: "/search",
+      query: {
+        location: searchInput,
+        startDate: startDate.toISOString(),
+        endDate: endDate.toISOString(),
+        numberofGuests,
+      },
+    });
+  };
   return (
     <header
       className="sticky top-0 z-50 grid grid-cols-3
     bg-white shadow-md  p-5 md:px-10"
     >
       <div
+        onClick={() => router.push("/")}
         className="relative flex items-center h-10
       cursor-pointer my-auto "
       >
@@ -55,7 +70,7 @@ const Header = () => {
           onChange={(e) => setsearchInput(e.target.value)}
           className="flex-grow pl-5 bg-transparent outline-none text-sm text-gray-600"
           type="text"
-          placeholder="Start your search"
+          placeholder={placeholder || "Start you search"}
         />
         <SearchIcon
           className="hidden md:inline-flex h-8 bg-red-400 text-white
@@ -103,7 +118,9 @@ const Header = () => {
             <button className="flex-grow text-gray-500" onClick={resatInput}>
               Cancel
             </button>
-            <button className="flex-grow text-red-400">Search</button>
+            <button onClick={search} className="flex-grow text-red-400">
+              Search
+            </button>
           </div>
         </div>
       )}
