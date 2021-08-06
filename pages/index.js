@@ -1,10 +1,11 @@
 import Head from "next/head";
 import Banner from "../components/Banner";
 import Header from "../components/Header";
+import LargeCard from "../components/LargeCard";
+import MediumCard from "../components/MediumCard";
 import SmallCard from "../components/SmallCard";
-
-export default function Home({ exploreDate }) {
-  console.log(exploreDate);
+import Footer from "../components/Footer";
+export default function Home({ exploreDate, cardsData }) {
   return (
     <div className="">
       <Head>
@@ -20,11 +21,32 @@ export default function Home({ exploreDate }) {
           <h2 className="text-4xl font-semibold pb-6">Explore Nearby </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 ">
             {exploreDate?.map((item) => (
-              <SmallCard item={item} />
+              <SmallCard key={item.key} item={item} />
             ))}
           </div>
         </section>
+
+        <section>
+          <h2 className="text-4xl font-semibold py-4">Live Anywhare</h2>
+          <div
+            className="flex space-x-3 overflow-scroll
+          scrollbar-hide p-3 -ml-3"
+          >
+            {cardsData?.map((item) => (
+              <MediumCard key={item.key} item={item} />
+            ))}
+          </div>
+        </section>
+
+        <LargeCard
+          img="https://links.papareact.com/4cj"
+          title="The Greetest Outdoors"
+          description="Wishlist created ny airbnb"
+          buttonText="Get Inspired"
+        />
       </main>
+
+      <Footer />
     </div>
   );
 }
@@ -32,9 +54,13 @@ export async function getStaticProps() {
   const exploreDate = await fetch("https://links.papareact.com/pyp").then(
     (res) => res.json()
   );
+  const cardsData = await fetch("https://links.papareact.com/zp1").then((res) =>
+    res.json()
+  );
   return {
     props: {
       exploreDate,
+      cardsData,
     },
   };
 }
